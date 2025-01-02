@@ -2,8 +2,7 @@ import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'rea
 import React from 'react';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-
-// Define the type for the repository details
+import dayjs from 'dayjs'; 
 type RepositoryDetailFromFavoritesScreenRouteProp = RouteProp<
   { RepositoryDetailFromFavorites: { repository: Repository } },
   'RepositoryDetailFromFavorites'
@@ -15,6 +14,8 @@ interface Repository {
   description: string;
   stargazers_count: number;
   forks_count: number;
+  created_at: string; 
+  updated_at: string; 
   language: string;
   owner: {
     login: string;
@@ -44,7 +45,9 @@ const RepositoryDetailFromFavoritesScreen = ({ route }: { route: RepositoryDetai
           <Text>⭐ {repository.stargazers_count} Stars</Text>
           <Text>🍴 {repository.forks_count} Forks</Text>
           <Text>🧑‍💻 Language: {repository.language || 'Not specified'}</Text>
-
+            <Text>🧑‍💻 Language: {repository.language || 'Not specified'}</Text>
+                       <Text>📅 Created: {dayjs(repository.created_at).format('YYYY-MM-DD')}</Text>
+                                          <Text>🔄 Last Updated: {dayjs(repository.updated_at).format('YYYY-MM-DD')}</Text>
           {/* Owner Details */}
           <View style={styles.ownerContainer}>
             <Image
@@ -96,6 +99,7 @@ const styles = StyleSheet.create({
     width: '90%',
     maxWidth: 700,
     height: '75%',
+    gap:8
   },
   title: {
     fontSize: 28,

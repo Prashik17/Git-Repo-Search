@@ -9,7 +9,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux';
 import { addFavorite } from '../../redux/favoritesSlice'; 
 import { FontAwesome } from '@expo/vector-icons';
-import NetInfo from '@react-native-community/netinfo';  // Import NetInfo
+import NetInfo from '@react-native-community/netinfo'; 
+import dayjs from 'dayjs'; 
 
 interface Repository {
   id: number;
@@ -18,6 +19,8 @@ interface Repository {
   stargazers_count: number;
   forks_count: number;
   language: string;
+  created_at: string; 
+  updated_at: string; 
   owner: {
     login: string;
     avatar_url: string;
@@ -35,15 +38,15 @@ export default function HomeScreen() {
   const [query, setQuery] = useState<string>('');
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [isConnected, setIsConnected] = useState<boolean>(true);  // State for internet connectivity
+  const [isConnected, setIsConnected] = useState<boolean>(true);  
 
   useEffect(() => {
-    // Check the network connection status
+  
     const unsubscribe = NetInfo.addEventListener(state => {
-      setIsConnected(state.isConnected || false);  // Set the state if connected or not
+      setIsConnected(state.isConnected || false);  
     });
 
-    // Clean up the listener when component is unmounted
+
     return () => {
       unsubscribe();
     };
@@ -78,7 +81,7 @@ export default function HomeScreen() {
   }, [query, isConnected]);
 
   const handleAddFavorite = (repository: Repository) => {
-    dispatch(addFavorite(repository)); // Dispatch to add the repository to favorites
+    dispatch(addFavorite(repository)); 
   };
 
   return (
@@ -94,7 +97,7 @@ export default function HomeScreen() {
           style={styles.input}
           placeholder="Search repositories"
           value={query}
-          onChangeText={setQuery}  // Removed the empty validation here
+          onChangeText={setQuery} 
         />
         {loading ? (
           <ActivityIndicator size="large" color="white" />
@@ -122,6 +125,10 @@ export default function HomeScreen() {
                     <Text>⭐ {item.stargazers_count} Stars</Text>
                     <Text>🍴 {item.forks_count} Forks</Text>
                     <Text>🧑‍💻 Language: {item.language || 'Not specified'}</Text>
+                    
+                    <Text>📅 Created: {dayjs(item.created_at).format('YYYY-MM-DD')}</Text>
+                    <Text>🔄 Last Updated: {dayjs(item.updated_at).format('YYYY-MM-DD')}</Text>
+
                     <View style={styles.ownerContainer}>
                       <Image source={{ uri: item.owner.avatar_url }} style={styles.avatar} />
                       <Text style={styles.ownerText}>Owner: {item.owner.login}</Text>
@@ -154,7 +161,7 @@ const styles = StyleSheet.create({
     borderRadius: '4%',
     marginBottom: 20,
     paddingLeft: 10,
-    backgroundColor: 'white', // Ensure the input field has a background for visibility
+    backgroundColor: 'white', 
   },
   item: {
     padding: 10,
@@ -164,6 +171,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 5,
+    gap:8,
   },
   title: {
     fontWeight: 'bold',

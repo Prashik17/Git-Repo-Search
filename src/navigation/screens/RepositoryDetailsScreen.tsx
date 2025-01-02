@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useDispatch } from 'react-redux';
-import { addFavorite } from '../../redux/favoritesSlice'; // Import the action
+import { addFavorite } from '../../redux/favoritesSlice';
+import dayjs from 'dayjs';
 
-// Define the type for the repository details
+
 type RepositoryDetailScreenRouteProp = RouteProp<
   { RepositoryDetail: { repository: Repository } },
   'RepositoryDetail'
@@ -18,6 +19,8 @@ interface Repository {
   stargazers_count: number;
   forks_count: number;
   language: string;
+  created_at: string; 
+  updated_at: string; 
   owner: {
     login: string;
     avatar_url: string;
@@ -32,7 +35,7 @@ const RepositoryDetailScreen = ({ route }: { route: RepositoryDetailScreenRouteP
 
   const handleAddToFavorites = () => {
     setIsFavorite((prev) => !prev);
-    dispatch(addFavorite(repository)); // Dispatch the action to add to favorites
+    dispatch(addFavorite(repository));
     Alert.alert(
       isFavorite ? 'Removed from Favorites' : 'Added to Favorites',
       `${repository.name} has been ${isFavorite ? 'removed from' : 'added to'} your favorites.`
@@ -57,6 +60,8 @@ const RepositoryDetailScreen = ({ route }: { route: RepositoryDetailScreenRouteP
           <Text>⭐ {repository.stargazers_count} Stars</Text>
           <Text>🍴 {repository.forks_count} Forks</Text>
           <Text>🧑‍💻 Language: {repository.language || 'Not specified'}</Text>
+           <Text>📅 Created: {dayjs(repository.created_at).format('YYYY-MM-DD')}</Text>
+                              <Text>🔄 Last Updated: {dayjs(repository.updated_at).format('YYYY-MM-DD')}</Text>
 
           {/* Owner Details */}
           <View style={styles.ownerContainer}>
@@ -116,6 +121,7 @@ const styles = StyleSheet.create({
     width: '90%',
     maxWidth: 700,
     height: '75%',
+    gap:8
   },
   title: {
     fontSize: 28,

@@ -8,7 +8,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 type RootStackParamList = {
   RepoFromFav: { repository: any };
-  // other screens can be added here
+
 };
 
 type FavoritesScreenNavigationProp = StackNavigationProp<RootStackParamList, 'RepoFromFav'>;
