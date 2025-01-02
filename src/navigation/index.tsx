@@ -10,7 +10,6 @@ import HomeScreen from './screens/HomeScreen';
 import { Profile } from './screens/Profile';
 import { Settings } from './screens/Settings';
 import { Updates } from './screens/Updates';
-import { NotFound } from './screens/NotFound';
 import RepositoryDetailScreen from './screens/RepositoryDetailsScreen';
 
 const RootStack = createNativeStackNavigator({
@@ -58,15 +57,7 @@ const RootStack = createNativeStackNavigator({
         ),
       }),
     },
-    NotFound: {
-      screen: NotFound,
-      options: {
-        title: '404',
-      },
-      linking: {
-        path: '*',
-      },
-    },
+    
   },
 });
 

@@ -22,6 +22,8 @@ interface Repository {
   };
 }
 
+
+
 const RepositoryDetailScreen = ({ route }: { route: RepositoryDetailScreenRouteProp }) => {
   const { repository } = route.params; // Extract the repository from route params
   const navigation = useNavigation(); // Access navigation
