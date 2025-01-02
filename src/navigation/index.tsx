@@ -1,4 +1,3 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HeaderButton, Text } from '@react-navigation/elements';
 import {
   createStaticNavigation,
@@ -6,57 +5,34 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Image } from 'react-native';
-import bell from '../assets/bell.png';
-import newspaper from '../assets/newspaper.png';
 import { Home } from './screens/Home';
+import HomeScreen from './screens/HomeScreen';
 import { Profile } from './screens/Profile';
 import { Settings } from './screens/Settings';
 import { Updates } from './screens/Updates';
 import { NotFound } from './screens/NotFound';
+import RepositoryDetailScreen from './screens/RepositoryDetailsScreen';
 
-const HomeTabs = createBottomTabNavigator({
+const RootStack = createNativeStackNavigator({
   screens: {
     Home: {
-      screen: Home,
+      screen: HomeScreen,
       options: {
-        title: 'Feed',
-        tabBarIcon: ({ color, size }) => (
-          <Image
-            source={newspaper}
-            tintColor={color}
-            style={{
-              width: size,
-              height: size,
-            }}
-          />
-        ),
+        title: 'Home',
+        headerShown:false
+      },
+    },
+    Repository: {
+      screen: RepositoryDetailScreen,
+      options: {
+        title: 'Repository',
+        headerShown:false
       },
     },
     Updates: {
       screen: Updates,
       options: {
-        tabBarIcon: ({ color, size }) => (
-          <Image
-            source={bell}
-            tintColor={color}
-            style={{
-              width: size,
-              height: size,
-            }}
-          />
-        ),
-      },
-    },
-  },
-});
-
-const RootStack = createNativeStackNavigator({
-  screens: {
-    HomeTabs: {
-      screen: HomeTabs,
-      options: {
-        title: 'Home',
-        headerShown: false,
+        title: 'Updates',
       },
     },
     Profile: {
