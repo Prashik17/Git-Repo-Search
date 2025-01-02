@@ -1,14 +1,12 @@
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import React from 'react';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useDispatch } from 'react-redux';
-import { addFavorite } from '../../redux/favoritesSlice'; // Import the action
 
 // Define the type for the repository details
-type RepositoryDetailScreenRouteProp = RouteProp<
-  { RepositoryDetail: { repository: Repository } },
-  'RepositoryDetail'
+type RepositoryDetailFromFavoritesScreenRouteProp = RouteProp<
+  { RepositoryDetailFromFavorites: { repository: Repository } },
+  'RepositoryDetailFromFavorites'
 >;
 
 interface Repository {
@@ -24,20 +22,9 @@ interface Repository {
   };
 }
 
-const RepositoryDetailScreen = ({ route }: { route: RepositoryDetailScreenRouteProp }) => {
+const RepositoryDetailFromFavoritesScreen = ({ route }: { route: RepositoryDetailFromFavoritesScreenRouteProp }) => {
   const { repository } = route.params;
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  const handleAddToFavorites = () => {
-    setIsFavorite((prev) => !prev);
-    dispatch(addFavorite(repository)); // Dispatch the action to add to favorites
-    Alert.alert(
-      isFavorite ? 'Removed from Favorites' : 'Added to Favorites',
-      `${repository.name} has been ${isFavorite ? 'removed from' : 'added to'} your favorites.`
-    );
-  };
 
   return (
     <LinearGradient
@@ -66,13 +53,6 @@ const RepositoryDetailScreen = ({ route }: { route: RepositoryDetailScreenRouteP
             />
             <Text style={styles.ownerText}>Owner: {repository.owner.login}</Text>
           </View>
-
-          {/* Add to Favorites Button */}
-          <TouchableOpacity style={styles.favoriteButton} onPress={handleAddToFavorites}>
-            <Text style={styles.favoriteButtonText}>
-              {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-            </Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </LinearGradient>
@@ -143,18 +123,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#555',
   },
-  favoriteButton: {
-    marginTop: 20,
-    backgroundColor: '#3b5998',
-    borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-  },
-  favoriteButtonText: {
-    color: 'white',
-    fontSize: 18,
-    textAlign: 'center',
-  },
 });
 
-export default RepositoryDetailScreen;
+export default RepositoryDetailFromFavoritesScreen;

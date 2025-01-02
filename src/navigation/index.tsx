@@ -11,6 +11,8 @@ import { Profile } from './screens/Profile';
 import { Settings } from './screens/Settings';
 import { Updates } from './screens/Updates';
 import RepositoryDetailScreen from './screens/RepositoryDetailsScreen';
+import RepositoryListScreen from './screens/RepositoryListScreen';
+import RepoFromFav from './screens/RepoFromFavorite'
 
 const RootStack = createNativeStackNavigator({
   screens: {
@@ -25,6 +27,20 @@ const RootStack = createNativeStackNavigator({
       screen: RepositoryDetailScreen,
       options: {
         title: 'Repository',
+        headerShown:false
+      },
+    },
+    RepositoryList: {
+      screen: RepositoryListScreen,
+      options: {
+        title: 'RepositoryList',
+        headerShown:false
+      },
+    },
+    RepoFromFav: {
+      screen: RepoFromFav,
+      options: {
+        title: 'RepositoryList',
         headerShown:false
       },
     },
